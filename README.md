@@ -1,6 +1,6 @@
 # SVG Data URI Encoder
 
-A command-line tool written in Dart that converts SVG files into Base64-encoded data URIs, making them easy to embed in HTML, CSS, or JavaScript.
+A command-line tool written in Dart that converts SVG files into Base64-encoded data URIs, making them easy to embed.
 
 ## Features
 
