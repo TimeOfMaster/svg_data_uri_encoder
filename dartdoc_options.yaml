@@ -1,0 +1,9 @@
+dartdoc:
+  categories:
+    "Minification":
+      markdown: doc/minification.md
+    "Clipboard":
+      markdown: doc/clipboard.md
+  showUndocumentedCategories: true
+  includeDependencies: false
+  documentationFrom: ['lib']

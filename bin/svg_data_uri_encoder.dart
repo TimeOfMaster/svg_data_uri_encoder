@@ -1,7 +1,17 @@
 import 'dart:io';
-import 'package:svg_data_uri_encoder/svg_data_uri_encoder.dart';
+import 'package:svg_data_uri_encoder/src/svg_data_uri_encoder.dart';
 import 'package:svg_data_uri_encoder/src/clipboard.dart';
 
+/// Prints usage information for the SVG Data URI Encoder tool.
+///
+/// Displays available command-line options and arguments, including:
+/// - File path argument for the SVG file to encode
+/// - Help options (-h, --help)
+/// - Minification options (-m, --minify) for reducing SVG file size
+/// - Clipboard options (-c, --clipboard)
+/// - Output file options (-o, --output)
+/// - Verbose mode (-v, --verbose)
+/// - Validation option (--validate)
 void printUsage() {
   print('''
 SVG Data URI Encoder
@@ -15,14 +25,46 @@ Arguments:
 
 Options:
   -h, --help            Show this help message
-  -m, --minify          Minify SVG before encoding
+  -m, --minify          Minify SVG before encoding (removes whitespace, 
+                       comments, and optimizes paths)
   -c, --clipboard       Copy result to clipboard
   -o, --output FILE     Write output to a file instead of stdout
   -v, --verbose         Show detailed processing information
   --validate            Validate SVG before encoding
+
+Examples:
+  # Minify and encode an SVG file
+  dart encode_svg.dart icon.svg -m
+
+  # Minify, encode and copy to clipboard
+  dart encode_svg.dart logo.svg -m -c
+
+  # Save minified result to a file
+  dart encode_svg.dart image.svg -m -o encoded.txt
 ''');
 }
 
+/// The main entry point for the SVG Data URI Encoder tool.
+///
+/// Processes command-line [arguments] to convert an SVG file to a data URI.
+/// Supports various options including:
+/// - Minification of SVG content:
+///   * Removes comments and unnecessary whitespace
+///   * Optimizes path data
+///   * Removes empty groups and unused attributes
+///   * Shortens color values
+///   * Reduces precision of numbers
+/// - Copying result to clipboard
+/// - Writing output to a file
+/// - Verbose logging
+/// - SVG validation
+///
+/// The minification process can significantly reduce file size while
+/// maintaining the visual appearance of the SVG.
+///
+/// Returns a Future that completes when the processing is done.
+///
+/// Exits with code 0 on success, 1 on error or when no arguments are provided.
 Future<void> main(List<String> arguments) async {
   final Map<String, bool> options = {
     'minify': arguments.contains('-m') || arguments.contains('--minify'),
@@ -72,6 +114,15 @@ Future<void> main(List<String> arguments) async {
   }
 }
 
+/// Gets the output file path from command line arguments.
+///
+/// Searches for the -o or --output option in the [args] list and returns
+/// the following argument as the output path. If no output option is found
+/// or no path is provided after the option, returns null.
+///
+/// [args] - The command line arguments to search through
+///
+/// Returns the output file path if specified, null otherwise.
 String? _getOutputPath(List<String> args) {
   final outputIndex = args.indexOf('-o');
   if (outputIndex == -1) {

@@ -7,7 +7,11 @@ A command-line tool written in Dart that converts SVG files into Base64-encoded 
 - Reads SVG files from the filesystem
 - Converts SVG content to Base64
 - Generates complete data URI strings
-- Simple command-line interface
+- Minification options for smaller output
+- Clipboard integration
+- File output support
+- Verbose logging
+- SVG validation
 - Error handling for common issues
 
 ## Installation
@@ -18,32 +22,61 @@ A command-line tool written in Dart that converts SVG files into Base64-encoded 
 
 ## Usage
 
-Run the tool from the command line:
+Basic usage:
 
 ```bash
-dart run bin/svg_data_uri_encoder.dart <path-to-svg-file>
+dart run bin/svg_data_uri_encoder.dart <path-to-svg-file> [options]
 ```
 
-Example:
+Options:
+
+- `-h, --help`: Show help message
+- `-m, --minify`: Minify SVG before encoding
+- `-c, --clipboard`: Copy result to clipboard
+- `-o, --output FILE`: Write output to a file
+- `-v, --verbose`: Show detailed processing information
+- `--validate`: Validate SVG before encoding
+
+Examples:
+
 ```bash
+# Basic encoding
 dart run bin/svg_data_uri_encoder.dart assets/icon.svg
+
+# Minify and encode
+dart run bin/svg_data_uri_encoder.dart assets/icon.svg -m
+
+# Minify, encode and copy to clipboard
+dart run bin/svg_data_uri_encoder.dart assets/logo.svg -m -c
+
+# Save result to file with verbose output
+dart run bin/svg_data_uri_encoder.dart assets/image.svg -m -o encoded.txt -v
 ```
 
-The tool will output a data URI that you can use directly in your code:
-```css
-background-image: url(data:image/svg+xml;base64,PHN2...);
-```
+### Minification
+
+When using the `-m` or `--minify` option, the tool performs several optimizations:
+
+- Removes comments and unnecessary whitespace
+- Optimizes path data
+- Removes empty groups and unused attributes
+- Shortens color values
+- Reduces precision of numbers
+
+This can significantly reduce the output size while maintaining the visual quality.
 
 ## Building
 
 To create a standalone executable:
 
 For Windows:
+
 ```bash
 dart compile exe bin/svg_data_uri_encoder.dart -o svg_encoder.exe
 ```
 
 For Linux/macOS:
+
 ```bash
 dart compile exe bin/svg_data_uri_encoder.dart -o svg_encoder
 ```
@@ -55,6 +88,9 @@ The tool includes error handling for:
 - Missing file path argument
 - Non-existent files
 - Invalid file content
+- Clipboard operation failures
+- File write permissions
+- SVG validation errors
 
 ## Requirements
 
