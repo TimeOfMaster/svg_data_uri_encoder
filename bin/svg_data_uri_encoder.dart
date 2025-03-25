@@ -1,36 +1,83 @@
 import 'dart:io';
-import 'dart:convert';
+import 'package:svg_data_uri_encoder/svg_data_uri_encoder.dart';
+import 'package:svg_data_uri_encoder/src/clipboard.dart';
+
+void printUsage() {
+  print('''
+SVG Data URI Encoder
+
+Usage: 
+  dart encode_svg.dart <path-to-svg-file> [options]
+  dart encode_svg.dart [-h|--help]
+
+Arguments:
+  <path-to-svg-file>    Path to the SVG file to encode
+
+Options:
+  -h, --help            Show this help message
+  -m, --minify          Minify SVG before encoding
+  -c, --clipboard       Copy result to clipboard
+  -o, --output FILE     Write output to a file instead of stdout
+  -v, --verbose         Show detailed processing information
+  --validate            Validate SVG before encoding
+''');
+}
 
 Future<void> main(List<String> arguments) async {
-  // Ensure the user provides a file path argument.
-  if (arguments.isEmpty) {
-    print('Usage: dart encode_svg.dart <path-to-svg-file>');
-    exit(1);
+  final Map<String, bool> options = {
+    'minify': arguments.contains('-m') || arguments.contains('--minify'),
+    'clipboard': arguments.contains('-c') || arguments.contains('--clipboard'),
+    'verbose': arguments.contains('-v') || arguments.contains('--verbose'),
+    'validate': arguments.contains('--validate'),
+  };
+
+  if (arguments.isEmpty ||
+      arguments.contains('-h') ||
+      arguments.contains('--help')) {
+    printUsage();
+    exit(arguments.isEmpty ? 1 : 0);
   }
 
-  final filePath = arguments[0];
-  final file = File(filePath);
-
-  // Check if the file exists.
-  if (!(await file.exists())) {
-    print('Error: File not found at $filePath');
-    exit(1);
-  }
+  final outputPath = _getOutputPath(arguments);
 
   try {
-    // Read the SVG file content as a string.
-    final svgContent = await file.readAsString();
+    if (options['verbose'] == true) {
+      print('Processing SVG file: ${arguments[0]}');
+    }
 
-    // Base64 encode the SVG content.
-    final base64String = base64Encode(utf8.encode(svgContent));
+    var dataUri = await svgFileToDataUri(
+      arguments[0],
+      minify: options['minify'] ?? false,
+      validate: options['validate'] ?? false,
+    );
 
-    // Prepend the appropriate data URI scheme.
-    final dataUri = 'data:image/svg+xml;base64,$base64String';
+    if (options['clipboard'] == true) {
+      try {
+        await copyToClipboard(dataUri);
+        if (options['verbose'] == true) print('Copied to clipboard');
+      } catch (e) {
+        print('Failed to copy to clipboard: $e');
+      }
+    }
 
-    // Print the resulting data URI.
-    print('Data URI:\n$dataUri');
+    if (outputPath != null) {
+      await File(outputPath).writeAsString(dataUri);
+      if (options['verbose'] == true) print('Written to: $outputPath');
+    } else {
+      print('Data URI:\n$dataUri');
+    }
   } catch (e) {
     print('An error occurred: $e');
     exit(1);
   }
+}
+
+String? _getOutputPath(List<String> args) {
+  final outputIndex = args.indexOf('-o');
+  if (outputIndex == -1) {
+    final longOutputIndex = args.indexOf('--output');
+    if (longOutputIndex == -1) return null;
+    return args.length > longOutputIndex + 1 ? args[longOutputIndex + 1] : null;
+  }
+  return args.length > outputIndex + 1 ? args[outputIndex + 1] : null;
 }
