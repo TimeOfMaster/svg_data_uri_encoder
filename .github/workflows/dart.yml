@@ -2,19 +2,18 @@ name: Dart
 
 on:
   push:
-    branches: 
-      - "master"
+    branches: [ "master" ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
-      # Note: This workflow uses the latest stable version of the Dart SDK.
-      # You can specify other versions if desired, see documentation here:
-      # https://github.com/dart-lang/setup-dart/blob/main/README.md
       - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
 
       - name: Install dependencies
@@ -28,3 +27,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./doc/api
+          force_orphan: true  # Clean previous files
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
