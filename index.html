@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="svg_data_uri_encoder API docs, for the Dart programming language.">
+  <title>svg_data_uri_encoder - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">svg_data_uri_encoder package</li>
+  </ol>
+  <div class="self-name">svg_data_uri_encoder</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="svg-data-uri-encoder">SVG Data URI Encoder</h1>
+<p>A command-line tool written in Dart that converts SVG files into Base64-encoded data URIs, making them easy to embed.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Reads SVG files from the filesystem</li>
+<li>Converts SVG content to Base64</li>
+<li>Generates complete data URI strings</li>
+<li>Minification options for smaller output</li>
+<li>Clipboard integration</li>
+<li>File output support</li>
+<li>Verbose logging</li>
+<li>SVG validation</li>
+<li>Error handling for common issues</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<ol>
+<li>Ensure you have the <a href="https://dart.dev/get-dart">Dart SDK</a> installed</li>
+<li>Clone this repository or download the source code</li>
+<li>Run <code>dart pub get</code> to install dependencies</li>
+</ol>
+<h2 id="usage">Usage</h2>
+<p>Basic usage:</p>
+<pre class="language-bash"><code class="language-bash">dart run bin/svg_data_uri_encoder.dart &lt;path-to-svg-file&gt; [options]
+</code></pre>
+<p>Options:</p>
+<ul>
+<li><code>-h, --help</code>: Show help message</li>
+<li><code>-m, --minify</code>: Minify SVG before encoding</li>
+<li><code>-c, --clipboard</code>: Copy result to clipboard</li>
+<li><code>-o, --output FILE</code>: Write output to a file</li>
+<li><code>-v, --verbose</code>: Show detailed processing information</li>
+<li><code>--validate</code>: Validate SVG before encoding</li>
+</ul>
+<p>Examples:</p>
+<pre class="language-bash"><code class="language-bash"># Basic encoding
+dart run bin/svg_data_uri_encoder.dart assets/icon.svg
+
+# Minify and encode
+dart run bin/svg_data_uri_encoder.dart assets/icon.svg -m
+
+# Minify, encode and copy to clipboard
+dart run bin/svg_data_uri_encoder.dart assets/logo.svg -m -c
+
+# Save result to file with verbose output
+dart run bin/svg_data_uri_encoder.dart assets/image.svg -m -o encoded.txt -v
+</code></pre>
+<h3 id="minification">Minification</h3>
+<p>When using the <code>-m</code> or <code>--minify</code> option, the tool performs several optimizations:</p>
+<ul>
+<li>Removes comments and unnecessary whitespace</li>
+<li>Optimizes path data</li>
+<li>Removes empty groups and unused attributes</li>
+<li>Shortens color values</li>
+<li>Reduces precision of numbers</li>
+</ul>
+<p>This can significantly reduce the output size while maintaining the visual quality.</p>
+<h2 id="building">Building</h2>
+<p>To create a standalone executable:</p>
+<p>For Windows:</p>
+<pre class="language-bash"><code class="language-bash">dart compile exe bin/svg_data_uri_encoder.dart -o svg_encoder.exe
+</code></pre>
+<p>For Linux/macOS:</p>
+<pre class="language-bash"><code class="language-bash">dart compile exe bin/svg_data_uri_encoder.dart -o svg_encoder
+</code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<p>The tool includes error handling for:</p>
+<ul>
+<li>Missing file path argument</li>
+<li>Non-existent files</li>
+<li>Invalid file content</li>
+<li>Clipboard operation failures</li>
+<li>File write permissions</li>
+<li>SVG validation errors</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Dart SDK ^3.7.1</li>
+<li>Compatible with Windows, macOS, and Linux</li>
+</ul>
+<h2 id="license">License</h2>
+<p>This project is licensed under the MIT License - see the LICENSE file for details.</p>
+<h2 id="attribution">Attribution</h2>
+<p>Favicon: <a href="https://icons8.com/icon/Q1AFc3pgrJGm/command-line">"Command Line"</a> icon by <a href="https://icons8.com">Icons8</a> (recolered)</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="svg_data_uri_encoder">
+  <span class="name"><a href="svg_data_uri_encoder">svg_data_uri_encoder</a></span> 
+
+</dt>
+<dd>SVG Data URI Encoder Library
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">svg_data_uri_encoder package</li>
+</ol>
+
+    <h5 class="hidden-xs"><span class="package-name">svg_data_uri_encoder</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="topics/Clipboard-topic.html">Clipboard</a></li>
+        <li><a href="topics/Minification-topic.html">Minification</a></li>
+      <li class="section-title">Libraries</li>
+      <li><a href="svg_data_uri_encoder">svg_data_uri_encoder</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+</main>
+<footer>
+  <span class="no-break">
+    svg_data_uri_encoder
+      2.0.0
+  </span>
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
