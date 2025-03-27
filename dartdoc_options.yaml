@@ -7,3 +7,4 @@ dartdoc:
   showUndocumentedCategories: true
   includeDependencies: false
   documentationFrom: ['lib']
+  favicon: doc/favicon.ico

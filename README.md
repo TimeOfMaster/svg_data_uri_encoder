@@ -100,3 +100,7 @@ The tool includes error handling for:
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Attribution
+
+Favicon: ["Command Line"](https://icons8.com/icon/Q1AFc3pgrJGm/command-line) icon by [Icons8](https://icons8.com) (recolered)
